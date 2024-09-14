@@ -1,130 +1,169 @@
-## Chakra Table Component
+## Overview
 
-This is an npm package for creating tables in any React web application. With this package, you can create tables with pagination, sorting, and multi level filters. It's an lightweight and easy to use package with responsive design.
+[`ReactWaveform`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A36%2C%22character%22%3A9%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition") is a React component that integrates with the `wavesurfer.js` library to provide a customizable audio waveform visualization. It supports features like play/pause, forward/rewind, and region marking with custom content.
 
-[Check out the demo page](https://saibarathr.github.io/Reusable-Table/) for a live example.
+## Installation
 
-### Installation
+To install the package, run the following command:
 
-```bash
-npm install chakra-ui-table-responsive
+```sh
+npm install react-audio-wave-modern
 ```
 
-### Usage
+## Usage
 
-```jsx
-import { ChakraTable } from "chakra-ui-table-responsive";
+### Importing the Component
 
-const sampleProps = {
-  loading: false,
-  error: null,
-  rowData: [
-    { id: 1, name: 'John Doe', age: 28 },
-    { id: 2, name: 'Jane Smith', age: 34 },
-  ],
-  sortable: true,
-  caption: 'Sample Table',
-  pagination: true,
-  rowsPerPage: 5,
-  paginationLength: 3,
-  filterRowsByColumnGroup: [
-    { column: 'name', values: ['John Doe', 'Jane Smith'] },
-  ],
-  columnsData: [
-    { label: 'id', name: 'ID' },
-    { label: 'name', name: 'Name' },
-    { label: 'age', name: 'Age' },
-  ],
-  tableParentClass: 'custom-parent-class',
-  tableChildClass: 'custom-child-class',
-  disableDefaultScrollStyle: false,
+First, import the [`ReactWaveform`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A36%2C%22character%22%3A9%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition") component and any necessary dependencies:
+
+```tsx
+import React from 'react';
+import ReactWaveform from 'react-audio-wave-modern';
+import Wavesurfer, { WaveSurferOptions } from 'wavesurfer.js';
+import { ForwardIcon, PauseIcon, PlayIcon, Rewind } from './IconExporter';
+```
+
+### Basic Example
+
+Here is a basic example of how to use the [`ReactWaveform`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A36%2C%22character%22%3A9%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition") component:
+
+```tsx
+import React from 'react';
+import ReactWaveform from 'react-audio-wave-modern';
+
+const App = () => {
+  const options: WaveSurferOptions = {
+    container: '#waveform',
+    waveColor: '#A8DBA8',
+    progressColor: '#3B8686',
+    cursorColor: '#FF0000',
+  };
+
+  return (
+    <div>
+      <ReactWaveform
+        audioUrl="https://example.com/audio.mp3"
+        options={options}
+      />
+    </div>
+  );
 };
-
-const App = () => (
-    <ChakraTable {...sampleProps} />
-);
 
 export default App;
 ```
 
 ### Props
 
-- **loading**: [`Boolean`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A2%2C%22character%22%3A14%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition") - Default: `false`. Shows a loading spinner when `true`.
-- **error**: [`any`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A41%2C%22character%22%3A28%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition") - Error object to display if there's an error.
-- **rowData**: [`Array`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A20%2C%22character%22%3A29%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition") - Array of objects representing the rows data.
-- **sortable**: [`Boolean`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A2%2C%22character%22%3A14%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition") - Default: `false`. Enables sorting of columns by clicking the column name.
-- **caption**: [`String`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A5%2C%22character%22%3A13%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition") - Header for the table. Displays search, total rows, total filtered rows, and filter.
-- **pagination**: [`Boolean`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A2%2C%22character%22%3A14%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition") - Default: `false`. Enables pagination.
-- **rowsPerPage**: [`Number`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A14%2C%22character%22%3A24%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition") - Default: [`6`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A14%2C%22character%22%3A126%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition"). Number of rows per page when pagination is enabled.
-- **paginationLength**: [`Number`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A14%2C%22character%22%3A24%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition") - Default: [`5`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A17%2C%22character%22%3A109%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition"). Sets the limit for pagination numbers range.
-- **filterRowsByColumnGroup**: [`Array`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A20%2C%22character%22%3A29%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition") - Array of objects for filtering rows by column group.
-- **columnsData**: [`Array`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A20%2C%22character%22%3A29%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition") - Array of objects representing the columns data.
-- **tableParentClass**: [`String`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A5%2C%22character%22%3A13%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition") - Custom class for the table parent.
-- **tableChildClass**: [`String`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A5%2C%22character%22%3A13%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition") - Custom class for the table child.
-- **disableDefaultScrollStyle**: [`Boolean`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FDev%2Fchakra-ui-table-library%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A2%2C%22character%22%3A14%7D%7D%5D%2C%22fc7e9e91-028e-4fad-b13d-e84464203a68%22%5D "Go to definition") - Default: `false`. Disables default scroll style.
+The [`ReactWaveform`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A36%2C%22character%22%3A9%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition") component accepts the following props:
 
-## Feature List / Optional Props
+- [`audioUrl`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A7%2C%22character%22%3A2%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition") (string): The URL of the audio file to be loaded.
+- [`options`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A8%2C%22character%22%3A2%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition") (WaveSurferOptions): Configuration options for the `wavesurfer.js` instance.
+- [`ProgressRenderer`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A9%2C%22character%22%3A2%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition") (React.FC): Optional custom progress renderer component.
+- [`progressRendererClassName`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A10%2C%22character%22%3A2%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition") (string): Optional class name for the progress renderer container.
+- [`playUsingRange`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A11%2C%22character%22%3A2%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition") ({ start: number, end: number }): Optional range for playing a specific segment of the audio.
 
-**sortable**: Boolean, To sort columns by ascending or descending when clicking the column name. This won't work for cell renderer components inside a column. Only for string and numbers
+### Advanced Example
 
+Here is an advanced example demonstrating the use of custom progress renderer and play range:
 
-**caption**: String, This is the header props for the table, default behaviour has no header so headers are visible only when a caption is provided. It displays search, total rows, total filtered rows and filter.
+```tsx
+import React, { useRef } from 'react';
+import ReactWaveform from 'react-audio-wave-modern';
+import Wavesurfer, { WaveSurferOptions } from 'wavesurfer.js';
 
+const ProgressRenderer = ({ waveform }) => {
+  const progress = waveform.current ? waveform.current.getCurrentTime() : 0;
+  return <div>Progress: {progress.toFixed(2)}s</div>;
+};
 
-**Search** Bar: Default disabled. Search will be enabled once captions are provided so its default behaviour depends on captions that enable headers.
+const App = () => {
+  const options: WaveSurferOptions = {
+    container: '#waveform',
+    waveColor: '#A8DBA8',
+    progressColor: '#3B8686',
+    cursorColor: '#FF0000',
+  };
 
+  return (
+    <div>
+      <ReactWaveform
+        audioUrl="https://example.com/audio.mp3"
+        options={options}
+        ProgressRenderer={ProgressRenderer}
+        progressRendererClassName="progress-container"
+        playUsingRange={{ start: 10, end: 20 }}
+      />
+    </div>
+  );
+};
 
-**pagination**: Boolean, Default: Pagination is turned off by default so this prop is required if you want to enable the pagination.
+export default App;
+```
 
+### Custom Icons
 
-**defaultRowsPerPage**: Number, By default the rows per page is enabled when pagination is enabled. Default rows per page are 6 if no value is provided.
+You can customize the play, pause, forward, and rewind icons by importing and using your own icon components:
 
+```tsx
+import { ForwardIcon, PauseIcon, PlayIcon, Rewind } from './IconExporter';
 
-**defaultPaginationLength**: Number, these set the limit for pagination numbers range for example a value of 5 will limit displaying 1-5 with next and previous buttons to jump to 6-10 and thus by it goes on till the rows end. The default pagination length is 5 if no value is provided.
+const App = () => {
+  // ... other code
 
+  return (
+    <div>
+      <ReactWaveform
+        audioUrl="https://example.com/audio.mp3"
+        options={options}
+        ProgressRenderer={ProgressRenderer}
+        progressRendererClassName="progress-container"
+        playUsingRange={{ start: 10, end: 20 }}
+        icons={{
+          play: <PlayIcon />,
+          pause: <PauseIcon />,
+          forward: <ForwardIcon />,
+          rewind: <Rewind />,
+        }}
+      />
+    </div>
+  );
+};
+```
 
-**filterRowsByColumnGroup**: Array of Objects.
+## API
 
-**Format**: ```[ { column: 'name of column 1', values: [ 'filter list of this column 1', 'multi filters for same columns' ] },  { column: 'name of column 2', values: [ 'filter list of this column 2', 'multi filters for same columns' ] } ]```.
+### Methods
 
-The default behaviour of filters is disabled if filterRowsByColumnGroup is not provided. 
+- [`playPause()`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A136%2C%22character%22%3A8%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition"): Toggles play/pause state.
+- [`forWardBySeconds(seconds: number)`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A143%2C%22character%22%3A8%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition"): Forwards the audio by the specified number of seconds.
+- [`rewindBySeconds(seconds: number)`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A149%2C%22character%22%3A8%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition"): Rewinds the audio by the specified number of seconds.
 
-``` Example: filterRowsByColumnGroup={[{ column: 'status', values: ['failed', 'waiting', 'paid'] }, { column: 'name', values: ['Sai Barath', 'Lokesh'] }, { column: 'purchaseId', values: ['25602'] }]}```
+### Events
 
+The [`ReactWaveform`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A36%2C%22character%22%3A9%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition") component listens to several events from the `wavesurfer.js` instance:
 
-**row**: Arrays of Objects, Rows Data. Format: ```[ { columnName: value }, { columnName: value }, { columnName: value } ] ```.
+- [`ready`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A60%2C%22character%22%3A27%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition"): Triggered when the waveform is ready.
+- [`play`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A168%2C%22character%22%3A23%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition"): Triggered when playback starts.
+- [`pause`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A171%2C%22character%22%3A27%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition"): Triggered when playback is paused.
+- [`finish`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A66%2C%22character%22%3A27%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition"): Triggered when playback finishes.
+- [`interaction`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A67%2C%22character%22%3A27%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition"): Triggered on user interaction with the waveform.
+- [`decode`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A76%2C%22character%22%3A27%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition"): Triggered during audio decoding.
 
+## Styling
 
-**headers**: Arrays of Objects, List of columns;
+You can customize the appearance of the waveform and its controls using CSS. The component uses Tailwind CSS classes by default, but you can override these styles as needed.
 
-**Format**: ```[ { label: 'API name or local name', name: 'display name for header', cellRenderer: <react component>, optional, use only if you need to add components in row  }, { label: 'API name or local name', name: 'display name for header'} ]```
-
-**cellRenderer**: React Component, the Default behaviour is to render a normal row value but if cellRenderer is provided then a callback function will return an array with array[0]: column name & array[1]: row value. For every single row, this cellRenderer will be called with new row values to give options to render different options based on row values instead of the same component.
-
-### Example
-
-```jsx
-const columnsData = useMemo(() => [
-  { label: 'timeStamp', name: 'TimeStamp' },
-  { label: 'status', name: 'Status', cellRenderer: StatusRenderer }
-], []);
-
-function StatusRenderer(value) {
-  const backgroundColor = value[1] === 'failed' ? 'bg-red-200' : value[1] === 'waiting' ? 'bg-yellow-100' : 'bg-green-200';
-  return <div className={`flex items-center p-1 capitalize text-gray-800 font-medium text-sm rounded-lg justify-center min-w-[60px] ${backgroundColor}`}>{value[1]}</div>;
+```css
+/* Example CSS */
+.progress-container {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
 }
 ```
 
-### Sample Table Pics
+## Conclusion
 
-![Sample Table](https://github.com/SaiBarathR/Custom-Table/assets/58382813/8bea2f71-a85f-4405-bdfc-d4a816c48b89)
+[`ReactWaveform`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FC%3A%2FDev%2Freact-audio-wave-modern%2Fsrc%2FReactWaveform.tsx%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A36%2C%22character%22%3A9%7D%7D%5D%2C%22c2466482-a3f0-48b1-9626-3159c9fc9d05%22%5D "Go to definition") is a powerful and flexible component for integrating audio waveform visualizations into your React applications. With support for custom icons, progress rendering, and region marking, it provides a comprehensive solution for audio playback and visualization.
 
-### Filter Pics
-
-![Filter Example](https://github.com/SaiBarathR/Custom-Table/assets/58382813/d9907af6-1461-4874-8db9-2babf5908120)
-
-### Search Pics
-
-![Search Example](https://github.com/SaiBarathR/Custom-Table/assets/58382813/5d9574dc-ca1d-4aa0-9e40-51f31d3386cf)
-
-**Advanced Version:** [Check out the advanced version using React with Ag-grid library](https://github.com/SaiBarathR/react-reusable-components/tree/main/Custom-Ag-Grid)
+For more information, refer to the [wavesurfer.js documentation](https://wavesurfer-js.org/docs/).
