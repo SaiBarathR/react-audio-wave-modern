@@ -1,2 +1,2 @@
 // src/index.ts
-export { default as ChakraTable } from './ChakraTable';
+export { default as ReactWaveform } from './ReactWaveform';
