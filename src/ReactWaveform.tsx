@@ -18,7 +18,7 @@ interface WaveformWrapperProps {
 
 function WaveformWrapper({ children }: WaveformWrapperProps) {
   return (
-    <div className=" min-w-[400px]  justify-between border-[#EBEBEB] border  bg-white rounded-lg min-h-[71px] flex items-center flex-col">
+    <div className=" min-w-[200px] w-full  justify-between border-[#EBEBEB] border  bg-white rounded-lg min-h-[71px] flex items-center flex-col">
       {children}
     </div>
   )
