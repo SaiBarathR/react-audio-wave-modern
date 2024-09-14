@@ -1,0 +1,36 @@
+{
+  "name": "chakra-ui-table-responsive",
+  "version": "0.0.7",
+  "private": false,
+  "scripts": {
+    "concat:css": "concat -o src/styles/combined.css src/styles/chakraTable.css src/styles/tailwind.css ",
+    "build:css": "npm run concat:css && postcss src/styles/combined.css -o dist/styles.css",
+    "build": "tsc && npm run build:css"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [],
+  "author": "Sai Barath R",
+  "license": "ISC",
+  "description": "Chakra UI Table Responsive",
+  "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.10"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "concat-cli": "^4.0.0",
+    "postcss-cli": "^11.0.0",
+    "typescript": "^5.5.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SaiBarathR/chakra-ui-table-library.git"
+  },
+  "homepage": "https://saibarathr.github.io/Reusable-Table/"
+}

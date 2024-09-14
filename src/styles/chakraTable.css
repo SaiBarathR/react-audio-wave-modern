@@ -1,0 +1,43 @@
+@import "./tailwind.css";
+
+.react-chakra-table-responsive-container {
+  border: 1px solid #D6D6D7;
+  border-radius: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100% !important;
+}
+
+/* Scroll Bar for table */
+
+.table-scroll::-webkit-scrollbar-track {
+  background-color: rgba(237, 240, 242, 0.5);
+  border-radius: 5px;
+}
+
+.table-scroll::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: rgb(240, 240, 240);
+  border-radius: 5px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+  background-color: rgb(190, 190, 190);
+  border-radius: 5px;
+}
+
+.table-scroll {
+  scrollbar-color: rgb(190, 190, 190) rgba(240, 240, 240, 0.5);
+  scrollbar-width: 6px;
+}
+
+/* .border-radius-table-row td:first-child,
+.border-radius-table-row th:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+.border-radius-table-row td:last-child,
+.border-radius-table-row th:last-child {
+    border-radius: 0 10px 10px 0;
+} */
