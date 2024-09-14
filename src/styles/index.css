@@ -1,1 +1,67 @@
-@import "./tailwind.css";
+.waveform-wrapper {
+    min-width: 200px;
+    width: 100%;
+    justify-content: space-between;
+    border: 1px solid #EBEBEB;
+    background-color: white;
+    border-radius: 8px;
+    min-height: 71px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.waveform-controls {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 8px;
+}
+
+.controls-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: flex-start;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+}
+
+.control-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 1px;
+    border-radius: 50%;
+    margin: 1px;
+}
+
+.control-button.rewind,
+.control-button.forward {
+    width: 20px;
+    height: 20px;
+}
+
+.rewind:hover,
+.forward:hover {
+    background-color: rgb(199, 195, 195);
+}
+
+.control-button.play-pause {
+    width: 28px;
+    height: 28px;
+}
+
+.play-pause:hover {
+    background-color: rgb(175, 201, 231);
+}
+
+.waveform {
+    width: 100%;
+    margin-right: 12px;
+    height: 24px;
+    align-self: center;
+}
