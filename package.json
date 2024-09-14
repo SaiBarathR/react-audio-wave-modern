@@ -3,7 +3,7 @@
   "version": "0.2.2",
   "private": false,
   "scripts": {
-    "build:css": "postcss src/styles/index.css -o dist/styles.css",
+    "build:css": "postcss src/styles.css -o dist/styles.css",
     "build": "tsc && npm run build:css"
   },
   "main": "dist/index.js",

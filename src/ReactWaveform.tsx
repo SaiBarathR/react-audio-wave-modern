@@ -2,7 +2,7 @@ import Wavesurfer, { WaveSurferOptions } from "wavesurfer.js";
 import { useEffect, useMemo, useRef, useState } from "react";
 import RegionsPlugin from "wavesurfer.js/dist/plugins/regions"
 import { createRoot } from "react-dom/client";
-import './index.css';
+import './styles.css';
 
 export function ForwardIcon() {
   return <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
