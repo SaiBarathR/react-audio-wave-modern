@@ -64,11 +64,6 @@ export default App;
 
 ![Sample Screenshot2](https://github.com/user-attachments/assets/96570268-8c68-4876-b849-d96162813ae7)
 
-
-### Sample Screenshot
-
-![Sample Screenshot](https://i.imgur.com/1Z2Z9Zz.png)
-
 ### Props
 
 | Prop                      | Type                                                                    | Default | Description                                                                                         |
