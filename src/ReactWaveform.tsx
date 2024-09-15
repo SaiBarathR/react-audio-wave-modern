@@ -249,9 +249,9 @@ function ReactWaveform({
         ) : null}
         <div id="waveform" className={waveformClass || "waveform"}></div>
       </div>
-      {progress && <div className={progressRendererClassName || "waveform-progress-wrapper"}>
-        {(displayProgress) && ProgressRenderer ? <ProgressRenderer waveform={waveform} /> : null}
-      </div>}
+      {progress && displayProgress && (ProgressRenderer ? <ProgressRenderer waveform={waveform} /> :
+        <div className={progressRendererClassName || "waveform-progress-wrapper"}>
+        </div>)}
     </div >
   )
 }
