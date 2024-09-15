@@ -1,7 +1,6 @@
 import Wavesurfer, { WaveSurferOptions } from "wavesurfer.js";
 import { useEffect, useMemo, useRef, useState } from "react";
-import RegionsPlugin from "wavesurfer.js/dist/plugins/regions"
-import { createRoot } from "react-dom/client";
+import RegionsPlugin, { RegionParams } from "wavesurfer.js/dist/plugins/regions";
 import './styles.css';
 
 export function ForwardIcon() {
@@ -53,19 +52,62 @@ export function PlayIcon() {
   return <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="##008DFF"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM10.6935 15.8458L15.4137 13.059C16.1954 12.5974 16.1954 11.4026 15.4137 10.941L10.6935 8.15419C9.93371 7.70561 9 8.28947 9 9.21316V14.7868C9 15.7105 9.93371 16.2944 10.6935 15.8458Z" fill="#008DFF"></path> </g></svg>
 }
 
-
 interface WaveformProps {
   audioUrl: string;
   options: WaveSurferOptions;
   ProgressRenderer?: React.FC<{ waveform: React.MutableRefObject<Wavesurfer | null> }>;
+  ControlsRenderer?: React.FC<{ waveform: React.MutableRefObject<Wavesurfer | null>, isPlaying: boolean }>;
   progressRendererClassName?: string;
   playUsingRange?: { start: number, end: number };
   controls?: boolean;
   WaveformWrapperClass?: string;
   waveformClass?: string;
+  progress?: boolean;
+  controlsOptions?: {
+    buttons?: {
+      playPause?: boolean;
+      forward?: boolean;
+      rewind?: boolean;
+    },
+    forwardBySeconds?: number;
+    rewindBySeconds?: number;
+    icons?: {
+      play?: React.ReactNode;
+      pause?: React.ReactNode;
+      forward?: React.ReactNode;
+      rewind?: React.ReactNode;
+    },
+    classNames?: {
+      playPause?: string;
+      forward?: string;
+      rewind?: string;
+    }
+  };
+  regionsList?: RegionParams[];
 }
 
 let rangeInterval: NodeJS.Timeout;
+
+const controlsOptionsDefault = {
+  buttons: {
+    playPause: true,
+    forward: true,
+    rewind: true
+  },
+  forwardBySeconds: 10,
+  rewindBySeconds: 10,
+  icons: {
+    play: <PlayIcon />,
+    pause: <PauseIcon />,
+    forward: <ForwardIcon />,
+    rewind: <Rewind />
+  },
+  classNames: {
+    playPause: "control-button play-pause",
+    forward: "control-button forward",
+    rewind: "control-button rewind"
+  }
+}
 
 function ReactWaveform({
   audioUrl = "",
@@ -76,11 +118,33 @@ function ReactWaveform({
   controls = true,
   WaveformWrapperClass = "",
   waveformClass = "",
+  progress = false,
+  ControlsRenderer,
+  controlsOptions,
+  regionsList
 }: WaveformProps) {
 
   const waveform = useRef<Wavesurfer | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [displayProgress, setDisplayProgress] = useState(false);
+  const controlsOptionsCombined = useMemo(() => {
+    return {
+      buttons: {
+        ...controlsOptionsDefault.buttons,
+        ...controlsOptions?.buttons
+      },
+      forwardBySeconds: controlsOptions?.forwardBySeconds ?? controlsOptionsDefault.forwardBySeconds,
+      rewindBySeconds: controlsOptions?.rewindBySeconds ?? controlsOptionsDefault.rewindBySeconds,
+      icons: {
+        ...controlsOptionsDefault.icons,
+        ...controlsOptions?.icons
+      },
+      classNames: {
+        ...controlsOptionsDefault.classNames,
+        ...controlsOptions?.classNames
+      }
+    }
+  }, [controlsOptions]);
   const regions = useMemo(() => RegionsPlugin.create(), []);
 
 
@@ -105,49 +169,12 @@ function ReactWaveform({
         clearInterval(rangeInterval)
       );
 
-      waveform.current.on("decode", function (progress) {
-        console.log("decode", progress);
-        const popUpDiv1 = document.createElement('div');
-        createRoot(popUpDiv1).render(<div style={{
-          background: '#D6EEF180',
-          maxWidth: '100px',
-          height: "8px",
-          width: "40px",
-          borderRadius: "2px",
-          fontSize: "4px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}>Delay in Delivery</div>);
-
-        regions.addRegion({
-          start: 19,
-          color: "rgba(10, 150, 0, 0.0)",
-          content: popUpDiv1,
-          resize: false,
-          drag: false
-        });
-
-        const popUpDiv2 = document.createElement('div');
-        createRoot(popUpDiv2).render(<div style={{
-          background: '#D6EEF180',
-          maxWidth: '100px',
-          height: "8px",
-          width: "30px",
-          borderRadius: "2px",
-          fontSize: "4px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}>Missing Items</div>);
-
-        regions.addRegion({
-          start: 49,
-          color: "rgba(10, 150, 0, 0.0)",
-          content: popUpDiv2,
-          resize: false,
-          drag: false
-        });
+      waveform.current.on("decode", function () {
+        if (regionsList && regionsList.length > 0) {
+          regionsList.forEach(region => {
+            regions.addRegion(region);
+          });
+        }
       });
 
       return () => {
@@ -203,26 +230,28 @@ function ReactWaveform({
   }, [playUsingRange]);
 
   return (
-    <div className={WaveformWrapperClass || "waveform-wrapper"}>
-      <div className="waveform-controls">
-        {controls && <div className="controls-container">
-          <div className="controls">
-            <div className="control-button rewind" onClick={() => rewindBySeconds(10)}>
-              <Rewind />
-            </div>
-            <div className="control-button play-pause" onClick={playPause}>
-              {isPlaying ? <PauseIcon /> : <PlayIcon />}
-            </div>
-            <div className="control-button forward" onClick={() => forWardBySeconds(10)}>
-              <ForwardIcon />
+    <div className={WaveformWrapperClass || ("waveform-wrapper " + (progress ? "waveform-wrapper-with-progress" : "waveform-wrapper-without-progress"))}>
+      <div className={`waveform-controls ${progress ? "" : "waveform-controls-without-progress"}`}>
+        {controls ? (ControlsRenderer ? <ControlsRenderer waveform={waveform} isPlaying={isPlaying} /> :
+          <div className={`controls-container  ${(progress) ? "controls-container-with-progress" : "controls-container-with-progress"}`}>
+            <div className="controls">
+              {controlsOptionsCombined.buttons.rewind && <div onClick={() => rewindBySeconds(controlsOptionsCombined.forwardBySeconds ?? 10)} className={controlsOptionsCombined.classNames?.rewind || "control-button rewind"}>
+                {controlsOptionsCombined?.icons.rewind ? <> {controlsOptionsCombined.icons.rewind} </> : <Rewind />}
+              </div>}
+              {controlsOptionsCombined.buttons.playPause && <div onClick={playPause} className={controlsOptionsCombined.classNames?.playPause || "control-button play-pause"}>
+                {isPlaying ? (controlsOptionsCombined?.icons?.pause ? <> {controlsOptionsCombined.icons.pause} </> : <PauseIcon />) : (controlsOptionsCombined.icons?.play ? <> {controlsOptionsCombined.icons.play} </> : <PlayIcon />)}
+              </div>}
+              {controlsOptionsCombined.buttons?.forward && <div onClick={() => forWardBySeconds(controlsOptionsCombined.forwardBySeconds ?? 10)} className={controlsOptionsCombined.classNames?.forward || "control-button forward"}>
+                {controlsOptionsCombined?.icons?.forward ? <>{controlsOptionsCombined.icons.forward} </> : <ForwardIcon />}
+              </div>}
             </div>
           </div>
-        </div>}
+        ) : null}
         <div id="waveform" className={waveformClass || "waveform"}></div>
       </div>
-      <div className={progressRendererClassName}>
+      {progress && <div className={progressRendererClassName || "waveform-progress-wrapper"}>
         {(displayProgress) && ProgressRenderer ? <ProgressRenderer waveform={waveform} /> : null}
-      </div>
+      </div>}
     </div >
   )
 }
