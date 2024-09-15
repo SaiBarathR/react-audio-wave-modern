@@ -23,9 +23,17 @@ import ReactWaveform from 'react-audio-wave-modern';
 const App = () => {
   const audioUrl = 'path/to/your/audio/file.mp3';
   const options = {
-    waveColor: '#ddd',
-    progressColor: '#ff5500',
-    cursorColor: '#ff5500',
+    "container": "#waveform",
+    "height": 44,
+    "waveColor": "#008DFF",
+    "progressColor": "#32D583",
+    "cursorWidth": 0,
+    "barWidth": 3,
+    "barGap": 2,
+    "barRadius": 5,
+    "barHeight": 1,
+    "mediaControls": false,
+    "dragToSeek": true      
   };
 
   return (
@@ -50,6 +58,16 @@ export default App;
   padding: 4px;
 }
 ```
+### Sample Screenshot
+
+![Sample Screenshot](https://github.com/user-attachments/assets/498c4a13-de14-4731-aa58-129089789928)
+
+![Sample Screenshot2](https://github.com/user-attachments/assets/96570268-8c68-4876-b849-d96162813ae7)
+
+
+### Sample Screenshot
+
+![Sample Screenshot](https://i.imgur.com/1Z2Z9Zz.png)
 
 ### Props
 
@@ -152,13 +170,21 @@ const ControlsRenderer = ({ waveform, isPlaying }) => {
 const App = () => {
   const audioUrl = 'audioUrl';
   const options = {
-    waveColor: '#ddd',
-    progressColor: '#ff5500',
-    cursorColor: '#ff5500',
-  };
+      "container": "#waveform",
+      "height": 44,
+      "waveColor": "#008DFF",
+      "progressColor": "#32D583",
+      "cursorWidth": 0,
+      "barWidth": 3,
+      "barGap": 2,
+      "barRadius": 5,
+      "barHeight": 1,
+      "mediaControls": false,
+      "dragToSeek": true      
+    };
 
   return (
-    <div>
+    <div className="audio-waveform">
       <ReactWaveform 
         audioUrl={audioUrl} 
         options={options} 
@@ -274,9 +300,17 @@ import ReactWaveform from 'react-audio-wave-modern';
 const App = () => {
   const audioUrl = 'audioUrl';
   const options = {
-    waveColor: '#ddd',
-    progressColor: '#ff5500',
-    cursorColor: '#ff5500',
+    "container": "#waveform",
+    "height": 44,
+    "waveColor": "#008DFF",
+    "progressColor": "#32D583",
+    "cursorWidth": 0,
+    "barWidth": 3,
+    "barGap": 2,
+    "barRadius": 5,
+    "barHeight": 1,
+    "mediaControls": false,
+    "dragToSeek": true      
   };
 
   const controlsOptions = {
@@ -314,7 +348,7 @@ const App = () => {
   ];
 
   return (
-    <div>
+    <div className="audio-waveform">
       <ReactWaveform
         audioUrl={audioUrl}
         options={options}
