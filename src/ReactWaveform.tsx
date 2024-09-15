@@ -205,14 +205,14 @@ function ReactWaveform({
   }
 
   useEffect(() => {
-    const isPlayRangeValid = playUsingRange && playUsingRange.start && playUsingRange.end && playUsingRange.start < playUsingRange.end;
+    const isPlayRangeValid = Boolean(playUsingRange && "start" in playUsingRange && "end" in playUsingRange && playUsingRange.start < playUsingRange.end);
     if (!isPlayRangeValid && playUsingRange) {
       console.error("Invalid play range");
     }
     if (rangeInterval) {
       clearInterval(rangeInterval);
     }
-    if (isPlayRangeValid && waveform.current) {
+    if (playUsingRange && isPlayRangeValid && waveform.current) {
       let { start, end } = playUsingRange;
       start = Math.max(0, start);
       end = Math.min(end, waveform.current.getDuration());
