@@ -36,6 +36,7 @@
 .controls {
     display: flex;
     align-items: center;
+    width: max-content;
 }
 
 .control-button {
