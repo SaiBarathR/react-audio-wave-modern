@@ -1,6 +1,6 @@
 {
   "name": "react-audio-wave-modern",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "private": false,
   "scripts": {
     "build:css": "postcss src/styles.css -o dist/styles.css",
