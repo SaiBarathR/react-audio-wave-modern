@@ -59,10 +59,9 @@ export default App;
 }
 ```
 ### Sample Screenshot
+![Sample Screenshot2](https://github.com/user-attachments/assets/9ca4185b-a0f1-49fc-b87e-ef8b60d0638b)
 
-![Sample Screenshot](https://github.com/user-attachments/assets/498c4a13-de14-4731-aa58-129089789928)
-
-![Sample Screenshot2](https://github.com/user-attachments/assets/96570268-8c68-4876-b849-d96162813ae7)
+![Sample Screenshot](https://github.com/user-attachments/assets/abc4633b-a606-4fe5-803e-31b86428c44c)
 
 ### Props
 
