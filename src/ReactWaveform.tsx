@@ -84,6 +84,7 @@ interface WaveformProps {
     }
   };
   regionsList?: RegionParams[];
+  skeletonLoader?: React.ReactNode;
 }
 
 let rangeInterval: NodeJS.Timeout;
@@ -121,12 +122,14 @@ function ReactWaveform({
   progress = false,
   ControlsRenderer,
   controlsOptions,
-  regionsList
+  regionsList,
+  skeletonLoader = true
 }: WaveformProps) {
 
   const waveform = useRef<Wavesurfer | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [displayProgress, setDisplayProgress] = useState(false);
+  const [loading, setLoading] = useState(true);
   const controlsOptionsCombined = useMemo(() => {
     return {
       buttons: {
@@ -159,8 +162,8 @@ function ReactWaveform({
       waveform.current.load(audioUrl);
 
       waveform.current.on("ready", () => {
-        console.log("ready");
         setDisplayProgress(true);
+        setLoading(false);
       });
       waveform.current.on("play", () => setIsPlaying(true));
       waveform.current.on("pause", () => setIsPlaying(false));
@@ -231,7 +234,8 @@ function ReactWaveform({
 
   return (
     <div className={WaveformWrapperClass || ("waveform-wrapper " + (progress ? "waveform-wrapper-with-progress" : "waveform-wrapper-without-progress"))}>
-      <div className={`waveform-controls ${progress ? "" : "waveform-controls-without-progress"}`}>
+      {loading && skeletonLoader && (<div className="waveform-skeleton"> </div>)}
+      <div style={{ display: (loading && skeletonLoader) ? "none" : "" }} className={`waveform-controls ${progress ? "" : "waveform-controls-without-progress"}`}>
         {controls ? (ControlsRenderer ? <ControlsRenderer waveform={waveform} isPlaying={isPlaying} /> :
           <div className={`controls-container  ${(progress) ? "controls-container-with-progress" : "controls-container-with-progress"}`}>
             <div className="controls">
@@ -252,8 +256,9 @@ function ReactWaveform({
       {progress && displayProgress && (ProgressRenderer ? <ProgressRenderer waveform={waveform} /> :
         <div className={progressRendererClassName || "waveform-progress-wrapper"}>
         </div>)}
-    </div >
+    </div>
   )
+
 }
 
 export default ReactWaveform;
