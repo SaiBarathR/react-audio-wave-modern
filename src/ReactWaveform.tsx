@@ -85,6 +85,7 @@ interface WaveformProps {
   };
   regionsList?: RegionParams[];
   skeletonLoader?: React.ReactNode;
+  rangePlayStatus?: (isPlaying: boolean) => void;
 }
 
 let rangeInterval: NodeJS.Timeout;
@@ -123,7 +124,8 @@ function ReactWaveform({
   ControlsRenderer,
   controlsOptions,
   regionsList,
-  skeletonLoader = true
+  skeletonLoader = true,
+  rangePlayStatus
 }: WaveformProps) {
 
   const waveform = useRef<Wavesurfer | null>(null);
@@ -150,7 +152,6 @@ function ReactWaveform({
   }, [controlsOptions]);
   const regions = useMemo(() => RegionsPlugin.create(), []);
 
-
   useEffect(() => {
     if (waveform.current) {
       waveform.current.load(audioUrl);
@@ -168,9 +169,14 @@ function ReactWaveform({
       waveform.current.on("play", () => setIsPlaying(true));
       waveform.current.on("pause", () => setIsPlaying(false));
       waveform.current.on("finish", () => setIsPlaying(false));
-      waveform.current.on("interaction", () =>
-        clearInterval(rangeInterval)
-      );
+      waveform.current.on("interaction", () => {
+        if (rangeInterval) {
+          clearInterval(rangeInterval)
+          if (rangePlayStatus) {
+            rangePlayStatus(false);
+          }
+        }
+      });
 
       waveform.current.on("decode", function () {
         if (regionsList && regionsList.length > 0) {
@@ -213,6 +219,9 @@ function ReactWaveform({
       console.error("Invalid play range");
     }
     if (rangeInterval) {
+      if (rangePlayStatus) {
+        rangePlayStatus(false);
+      }
       clearInterval(rangeInterval);
     }
     if (playUsingRange && isPlayRangeValid && waveform.current) {
@@ -221,14 +230,23 @@ function ReactWaveform({
       end = Math.min(end, waveform.current.getDuration());
       waveform.current.setTime(start);
       waveform.current.play();
+      if (rangePlayStatus) {
+        rangePlayStatus(true);
+      }
       rangeInterval = setTimeout(() => {
         if (waveform.current) {
           waveform.current.pause();
+          if (rangePlayStatus) {
+            rangePlayStatus(false);
+          }
         }
       }, (end - start) * 1000);
     }
     return () => {
       clearInterval(rangeInterval);
+      if (rangePlayStatus) {
+        rangePlayStatus(false);
+      }
     }
   }, [playUsingRange]);
 
