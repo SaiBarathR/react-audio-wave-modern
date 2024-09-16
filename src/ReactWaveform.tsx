@@ -243,9 +243,11 @@ function ReactWaveform({
       }, (end - start) * 1000);
     }
     return () => {
-      clearInterval(rangeInterval);
-      if (rangePlayStatus) {
-        rangePlayStatus(false);
+      if (rangeInterval) {
+        clearInterval(rangeInterval);
+        if (rangePlayStatus) {
+          rangePlayStatus(false);
+        }
       }
     }
   }, [playUsingRange]);
