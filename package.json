@@ -1,6 +1,6 @@
 {
   "name": "react-audio-wave-modern",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": false,
   "scripts": {
     "build:css": "postcss src/styles.css -o dist/styles.css",
@@ -8,10 +8,20 @@
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "keywords": [],
+  "keywords": [
+    "react audio",
+    "audio",
+    "waveform",
+    "react audio waveform",
+    "visualization",
+    "wavesurfer",
+    "react wavesurfer",
+    "audio player",
+    "audio waves"
+  ],
   "author": "Sai Barath R",
   "license": "ISC",
-  "description": "React audio waveform",
+  "description": "ReactWaveform is a React component that provides an interactive waveform visualization for audio files using the WaveSurfer.js library. This component supports custom controls, progress rendering, and regions for marking specific parts of the waveform.",
   "dependencies": {
     "@types/node": "^16.11.34",
     "@types/react": "^18.0.9",
